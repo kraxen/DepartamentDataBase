@@ -1,0 +1,130 @@
+﻿<Window x:Class="DepartamentDataBase.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DepartamentDataBase"
+        mc:Ignorable="d"
+        Title="База данных сотрудников" MinHeight="450" MinWidth="800">
+    <Grid Background="Black">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="5*"/>
+            <ColumnDefinition Width="5*"/>
+            <ColumnDefinition Width="10*"/>
+        </Grid.ColumnDefinitions>
+
+        <ComboBox 
+            x:Name="cbDepartament"
+            HorizontalAlignment="Stretch"
+            Margin="10,30,10,0"
+            VerticalAlignment="Top"
+            Height="30"
+            Grid.Column="1"
+            SelectionChanged="cbDepartament_SelectionChanged"
+            />
+        <TextBox 
+            x:Name="workerName"
+            HorizontalAlignment="Stretch"
+            Height="28"
+            Margin="10,100,10,0"
+            TextWrapping="Wrap"
+            Text="{Binding ElementName=lvWorkers, Path=SelectedItem.Name, Mode=TwoWay}"
+            VerticalAlignment="Top"
+            Grid.Column="0"
+            />
+        <Button 
+            Grid.Column="0"
+            Content="Изменить"
+            HorizontalAlignment="Stretch"
+            Margin="10,200,10,0"
+            VerticalAlignment="Top"
+            Height="28"
+            Click="btnRef"
+            />
+        <ListView 
+            x:Name="lvWorkers"
+            Grid.Column="2"
+            HorizontalAlignment="Stretch"
+            Margin="10"
+            VerticalAlignment="Stretch"
+            >
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn DisplayMemberBinding="{Binding Name}" Width="70">
+                        <TextBlock x:Name="btnSortByName" Text="Имя" MouseDown="btnSortByName_Click"/>
+                    </GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding Age}" Width="50">
+                        <TextBlock x:Name="btnSortByAge1" Text="Возраст" MouseDown="btnSortByAge_Click"/>
+                    </GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding Salary}" Width="70">
+                        <TextBlock x:Name="btnSortBySalary" Text="Зарплата" MouseDown="btnSortBySalary_Click"/>
+                    </GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding Position}" Width="150">
+                        <TextBlock x:Name="btnSortByWork" Text="Должность" MouseDown="btnSortByPosition_Click"/>
+                    </GridViewColumn>
+                    <GridViewColumn Header="Департамент" DisplayMemberBinding="{Binding DepartamentId}" Width="80"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <TextBox x:Name="tbSerJson" HorizontalAlignment="Stretch" Height="23" Margin="10,360,10,10" TextWrapping="Wrap" Text="_Repository.json" VerticalAlignment="Top" Grid.Column="0"/>
+        <TextBox x:Name="tbDeSerJson" HorizontalAlignment="Stretch" Height="23" Margin="10,385,10,10" TextWrapping="Wrap" Text="_Repository.json" VerticalAlignment="Top" Grid.Column="0"/>
+        <Button x:Name="btnSerJson" Content="Экспорт" HorizontalAlignment="Left" Margin="96,353,0,0" VerticalAlignment="Top" Width="92" Height="23" Click="btnSerJson_Click" Grid.Column="1"/>
+        <Button x:Name="btnDeSerJson" Content="Импорт" HorizontalAlignment="Left" Margin="96,386,0,0" VerticalAlignment="Top" Width="92" Height="23" Click="btnDeSerJson_Click" Grid.Column="1"/>
+        <TextBlock x:Name="textBlock1" HorizontalAlignment="Left" Margin="10,339,0,0" TextWrapping="Wrap" Text="To JSON" VerticalAlignment="Top" Foreground="White"/>
+        <TextBox 
+            x:Name="workerAge"
+            HorizontalAlignment="Stretch"
+            Height="28"
+            Margin="10,150,10,0"
+            TextWrapping="Wrap"
+            Text="{Binding SelectedItem.Age, ElementName=lvWorkers, Mode=TwoWay}"
+            VerticalAlignment="Top"
+            Grid.Column="0"
+            />
+        <TextBox 
+            x:Name="workerSalary"
+            HorizontalAlignment="Stretch"
+            Height="28"
+            Margin="10,100,10,0"
+            TextWrapping="Wrap"
+            Text="{Binding SelectedItem.Salary, ElementName=lvWorkers, Mode=TwoWay}"
+            VerticalAlignment="Top"
+            Grid.Column="1"
+            />
+        <TextBox 
+            x:Name="workerId"
+            HorizontalAlignment="Stretch"
+            Height="28"
+            Margin="10,150,10,0"
+            TextWrapping="Wrap"
+            Text="{Binding SelectedItem.DepartamentId, ElementName=lvWorkers, Mode=TwoWay}"
+            VerticalAlignment="Top"
+            Grid.Column="1"
+            />
+        <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Margin="10,75,0,0" TextWrapping="Wrap" Text="Имя:" VerticalAlignment="Top" RenderTransformOrigin="-2.27,0.442" Foreground="White"/>
+        <TextBlock x:Name="textBlock2" HorizontalAlignment="Left" Margin="10,130,10,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="White"><Run Text="Возраст"/><Run Text=":"/></TextBlock>
+        <TextBlock x:Name="textBlock3" HorizontalAlignment="Left" Margin="10,75,10,0" TextWrapping="Wrap" VerticalAlignment="Top" Grid.Column="1" Foreground="White"><Run Text="Зарплата"/><Run Text=":"/></TextBlock>
+        <TextBlock x:Name="textBlock4" HorizontalAlignment="Left" Margin="10,130,10,0" TextWrapping="Wrap" VerticalAlignment="Top" Grid.Column="1" Foreground="White"><Run Text="Номер департамента"/><Run Text=":"/></TextBlock>
+
+        <TextBlock x:Name="WorkerId" HorizontalAlignment="Left" Margin="157.099,381,0,0" TextWrapping="Wrap" 
+                   Text="{Binding SelectedItem.Id, ElementName=lvWorkers}"
+                   Visibility="Collapsed"
+                   VerticalAlignment="Top" Grid.Column="1"/>
+        <ComboBox x:Name="cmRep" HorizontalAlignment="Stretch" Margin="10,30,10,0" VerticalAlignment="Top" Height="30"
+                  SelectionChanged ="cmRep_SelectionChanged" Grid.Column="0"
+                  />
+        <TextBlock x:Name="textBlock5" HorizontalAlignment="Left" Margin="10,10,10,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="White"><Run Text="Выбор ведомства:"/><LineBreak/><Run/></TextBlock>
+        <TextBlock x:Name="textBlock6" HorizontalAlignment="Left" Margin="10.099,10,0,0" TextWrapping="Wrap" Text="Выбор департамента:" VerticalAlignment="Top" RenderTransformOrigin="-0.264,0.673" Grid.Column="1" Foreground="White"/>
+        
+        <Button 
+            Grid.Column="1"
+            Content="Удалить"
+            HorizontalAlignment="Stretch"
+            Margin="10,200,10,0"
+            VerticalAlignment="Top"
+            Height="28"
+            Click="btnRemove"
+            />
+
+    </Grid>
+</Window>
